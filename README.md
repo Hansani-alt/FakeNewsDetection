@@ -1,2 +1,2 @@
 # FakeNewsDetection
-AI-Powered Fake News Detection System Using NLP
+Fake News Detection System Using NLP
