@@ -6,3 +6,6 @@ dataset/Fake.csv
 dataset/True.csv
 dataset/clean_news.csv
 dataset/news.csv
+backup/
+feature_engineering/tfidf_features.py
+models/random_forest.py
