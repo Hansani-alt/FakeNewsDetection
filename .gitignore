@@ -1,0 +1,8 @@
+venv/
+bert_results/
+saved_models/
+dataset/preprocessed_news.csv
+dataset/Fake.csv
+dataset/True.csv
+dataset/clean_news.csv
+dataset/news.csv
