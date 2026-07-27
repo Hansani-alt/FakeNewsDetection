@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+saved_models/
+
+dataset/preprocessed_news.csv
+dataset/Fake.csv
+dataset/True.csv
+dataset/news.csv
+dataset/clean_news.csv
