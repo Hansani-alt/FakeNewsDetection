@@ -1,68 +1,33 @@
 import pandas as pd
-import re
-import string
 
 
-# Load dataset
-data = pd.read_csv("dataset/news.csv")
+def load_data(fake_path, true_path):
+    fake_df = pd.read_csv(fake_path)
+    true_df = pd.read_csv(true_path)
+
+    fake_df["label"] = 0
+    true_df["label"] = 1
+
+    df = pd.concat([fake_df, true_df], ignore_index=True)
+
+    return df
 
 
-# 1. Check missing values
-print("\nMissing Values:")
-print(data.isnull().sum())
+def clean_data(df):
+    df = df.drop_duplicates()
+    df = df.dropna()
+
+    return df
 
 
-# 2. Check duplicate rows
-print("\nDuplicate Rows:")
-print(data.duplicated().sum())
+if __name__ == "__main__":
+    fake_path = "dataset/Fake.csv"
+    true_path = "dataset/True.csv"
 
+    data = load_data(fake_path, true_path)
+    data = clean_data(data)
 
-# 3. Remove duplicate rows
-data = data.drop_duplicates()
+    data.to_csv("dataset/clean_news.csv", index=False)
 
-print("\nShape after removing duplicates:")
-print(data.shape)
-
-
-# 4. Convert text to lowercase
-data["text"] = data["text"].str.lower()
-
-print("\nLowercase Conversion Completed!")
-print(data["text"].head())
-
-
-# 5. Remove URLs
-data["text"] = data["text"].apply(
-    lambda x: re.sub(r"http\S+|www\S+", "", x)
-)
-
-
-# 6. Remove HTML tags
-data["text"] = data["text"].apply(
-    lambda x: re.sub(r"<.*?>", "", x)
-)
-
-
-# 7. Remove punctuation
-data["text"] = data["text"].apply(
-    lambda x: x.translate(str.maketrans("", "", string.punctuation))
-)
-
-
-# 8. Remove numbers
-data["text"] = data["text"].apply(
-    lambda x: re.sub(r"\d+", "", x)
-)
-
-
-# 9. Remove extra spaces
-data["text"] = data["text"].apply(
-    lambda x: " ".join(x.split())
-)
-
-
-# Save cleaned dataset
-data.to_csv("dataset/clean_news.csv", index=False)
-
-
-print("\nClean dataset saved successfully!")
+    print("Data cleaned successfully.")
+    print(data.head())

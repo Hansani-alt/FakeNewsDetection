@@ -1,35 +1,19 @@
-import pandas as pd
 import joblib
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-# Load dataset
-data = pd.read_csv("dataset/preprocessed_news.csv")
-
-# Convert tokens to normal text
-data["processed_text"] = data["tokens"].apply(
-    lambda x: " ".join(eval(x)) if isinstance(x, str) else " ".join(x)
-)
-
-# Train TF-IDF again
-tfidf = TfidfVectorizer(max_features=5000)
-tfidf.fit(data["processed_text"])
-
-# Load saved model
+# Load saved model and vectorizer
 model = joblib.load("saved_models/random_forest_model.pkl")
+vectorizer = joblib.load("saved_models/tfidf_vectorizer.pkl")
 
-# User input
-news = input("Enter News: ")
+while True:
+    news = input("\nEnter News (type 'exit' to quit): ")
 
-# Transform input
-news_vector = tfidf.transform([news])
+    if news.lower() == "exit":
+        break
 
-# Predict
-prediction = model.predict(news_vector)
+    news_vector = vectorizer.transform([news])
+    prediction = model.predict(news_vector)
 
-print("\nPrediction:")
-
-if prediction[0] == 0:
-    print("REAL NEWS")
-else:
-    print("FAKE NEWS")
+    if prediction[0] == 1:
+        print("Prediction: REAL NEWS")
+    else:
+        print("Prediction: FAKE NEWS")
