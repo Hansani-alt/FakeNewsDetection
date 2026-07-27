@@ -4,3 +4,8 @@ scikit-learn
 nltk
 joblib
 matplotlib
+gensim
+torch
+transformers
+streamlit
+seaborn
