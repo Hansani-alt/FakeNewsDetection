@@ -50,6 +50,19 @@ A Streamlit-based web application was developed to allow users to:
 - Predict whether the article is REAL or FAKE
 - View prediction confidence
 - Compare model accuracy
+## Screenshots
+
+### BERT Prediction
+![BERT Prediction](screenshots/BERT%20prediction.png)
+
+### SVM Prediction
+![SVM Prediction](screenshots/SVM%20prediction.png)
+
+### Random Forest Prediction
+![Random Forest Prediction](screenshots/Random%20Forest%20prediction.png)
+
+### Model Accuracy Comparison
+![Model Accuracy Comparison](screenshots/Model%20Accuracy%20Comparison%20chart.png)
 
 ## Technologies Used
 
