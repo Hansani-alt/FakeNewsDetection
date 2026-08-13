@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
 # Load dataset
-df = pd.read_csv("data/preprocessed_news.csv")
+df = pd.read_csv("dataset/preprocessed_news.csv")
 
 # Convert token strings back to list
 sentences = df["tokens"].apply(ast.literal_eval)

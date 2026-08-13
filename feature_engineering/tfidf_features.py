@@ -1,61 +1,33 @@
 import pandas as pd
+import joblib
 
-# Load cleaned dataset
-data = pd.read_csv("dataset/clean_news.csv")
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-# Remove missing text values
-data = data.dropna(subset=["text"])
+# Load preprocessed dataset
+data = pd.read_csv("dataset/preprocessed_news.csv")
 
-# Make sure text column is string
-data["text"] = data["text"].astype(str)
-
-print(data.head())
-
-print("\nDataset Shape:")
-print(data.shape)
-
-import nltk
-
-nltk.download('punkt')
-nltk.download('punkt_tab')
-nltk.download('stopwords')
-nltk.download('wordnet')
-
-from nltk.tokenize import word_tokenize
-
-# Tokenization
-data["tokens"] = data["text"].apply(word_tokenize)
-
-print("\nTokenization Completed!")
-print(data["tokens"].head())
-
-from nltk.corpus import stopwords
-
-# Load English stopwords
-stop_words = set(stopwords.words("english"))
-
-# Remove stopwords
-data["tokens"] = data["tokens"].apply(
-    lambda words: [word for word in words if word.lower() not in stop_words]
+# Convert tokens back to normal text
+data["processed_text"] = data["tokens"].apply(
+    lambda x: " ".join(eval(x)) if isinstance(x, str) else " ".join(x)
 )
 
-print("\nStopword Removal Completed!")
-print(data["tokens"].head())
+print("\nProcessed Text:")
+print(data["processed_text"].head())
 
-from nltk.stem import WordNetLemmatizer
+# TF-IDF Vectorization
+tfidf = TfidfVectorizer(max_features=5000)
 
-# Create lemmatizer
-lemmatizer = WordNetLemmatizer()
+X = tfidf.fit_transform(data["processed_text"])
 
-# Apply lemmatization
-data["tokens"] = data["tokens"].apply(
-    lambda words: [lemmatizer.lemmatize(word) for word in words]
-)
+y = data["label"]
 
-print("\nLemmatization Completed!")
-print(data["tokens"].head())
+print("\nTF-IDF Shape:")
+print(X.shape)
 
-# Save preprocessed dataset
-data.to_csv("dataset/preprocessed_news.csv", index=False)
+print("\nLabels Shape:")
+print(y.shape)
 
-print("\nPreprocessed dataset saved successfully!")
+# Save TF-IDF Vectorizer
+joblib.dump(tfidf, "saved_models/tfidf_vectorizer.pkl")
+
+print("\nTF-IDF Vectorizer saved successfully!")
