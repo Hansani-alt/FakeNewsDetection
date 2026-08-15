@@ -2,7 +2,7 @@ venv/
 __pycache__/
 bert_results/
 backup/
-saved_models/
+
 
 dataset/preprocessed_news.csv
 dataset/Fake.csv
@@ -12,5 +12,3 @@ dataset/clean_news.csv
 
 data/preprocessed_news.csv
 
-feature_engineering/tfidf_features.py
-models/random_forest.py
